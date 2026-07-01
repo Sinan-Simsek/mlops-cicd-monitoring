@@ -21,11 +21,11 @@ spec:
         # and its `update-manifest` job rewrites the tag below to the new
         # short SHA and commits it back. ArgoCD sees the manifest change and
         # rolls the Deployment.
-        # Replace erkansirin78 with your own Docker Hub username the first
-        # time you use this folder.
+        # Image lives under the Docker Hub user `sinansimsek` — kept in sync
+        # with the IMAGE env in .github/workflows/ci.yaml.
         # IfNotPresent lets Docker Desktop's k8s reuse a locally-built image
         # of the same tag without forcing a registry pull.
-        image: docker.io/erkansirin78/ml-prediction:77b6227
+        image: docker.io/sinansimsek/ml-prediction:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000

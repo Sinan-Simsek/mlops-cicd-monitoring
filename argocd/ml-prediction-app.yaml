@@ -16,7 +16,7 @@ spec:
 
   source:
     # Replace with your own fork's URL.
-    repoURL: https://github.com/erkansirin78/mlops-cicd-monitoring.git
+    repoURL: https://github.com/Sinan-Simsek/mlops-cicd-monitoring.git
     targetRevision: main
     # Only the k8s/ folder is the deployment source of truth.
     # ServiceMonitor lives here too because it logically belongs to the
