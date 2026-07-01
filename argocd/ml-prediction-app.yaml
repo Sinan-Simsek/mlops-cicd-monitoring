@@ -1,0 +1,35 @@
+# ArgoCD Application — tells ArgoCD to watch the k8s/ folder of this
+# repo and continuously sync its manifests into the cluster.
+#
+# Apply with:
+#   kubectl apply -n argocd -f argocd/ml-prediction-app.yaml
+#
+# Then watch the sync at https://localhost:8080 (after port-forward —
+# see the README "Install ArgoCD" section).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ml-prediction
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    # Replace with your own fork's URL.
+    repoURL: https://github.com/erkansirin78/mlops-cicd-monitoring.git
+    targetRevision: main
+    # Only the k8s/ folder is the deployment source of truth.
+    # ServiceMonitor lives here too because it logically belongs to the
+    # app, even though it depends on the Prometheus Operator CRDs.
+    path: k8s
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true       # delete resources removed from the manifest
+      selfHeal: true    # revert manual cluster edits back to the manifest
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,27 @@
+# Tells the Prometheus Operator (installed by the kube-prometheus-stack
+# Helm chart in the `monitoring` namespace) to scrape the ml-prediction
+# Service's /metrics endpoint every 15 s.
+#
+# Requires the Prometheus Operator CRDs to be installed first — see the
+# README "Install Prometheus + Grafana" section.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ml-prediction
+  labels:
+    app: ml-prediction
+    # The default kube-prometheus-stack Prometheus only picks up
+    # ServiceMonitors with this label — change it if your stack uses a
+    # different release name (see `helm get values <release>`).
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: ml-prediction
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s

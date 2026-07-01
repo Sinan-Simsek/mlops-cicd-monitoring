@@ -1,0 +1,7 @@
+# Standalone training scripts intentionally import libraries next to the
+# code that uses them (e.g. `import joblib` right before dumping the model),
+# so E402 (module-level import not at top) is expected there. The rest of
+# the codebase is linted normally.
+[lint.per-file-ignores]
+"train_iris_model.py" = ["E402"]
+"train_advertising_model.py" = ["E402"]

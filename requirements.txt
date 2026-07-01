@@ -1,0 +1,13 @@
+fastapi[all]==0.136.1
+uvicorn[standard]==0.46.0
+pandas== 2.2.3
+scikit-learn==1.5.2
+sqlmodel>=0.0.38
+psycopg2-binary>=2.9.12
+python-dotenv>=1.2.2
+langchain
+langchain-google-genai
+langchain-openai>=0.3
+joblib==1.4.2
+langchain-community>=0.4.1
+prometheus-fastapi-instrumentator>=7.0
