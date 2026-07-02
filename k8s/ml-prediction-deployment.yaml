@@ -25,7 +25,7 @@ spec:
         # with the IMAGE env in .github/workflows/ci.yaml.
         # IfNotPresent lets Docker Desktop's k8s reuse a locally-built image
         # of the same tag without forcing a registry pull.
-        image: docker.io/sinansimsek/ml-prediction:0a4483f
+        image: docker.io/sinansimsek/ml-prediction:d781c03
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
