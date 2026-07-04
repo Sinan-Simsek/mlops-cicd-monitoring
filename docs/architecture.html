@@ -1,0 +1,420 @@
+<title>ML Prediction — Mimari Şeması</title>
+<style>
+  :root {
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --ground: #0b0f16;
+    --panel: #121a28;
+    --panel-2: #0e1622;
+    --raise: #17223442;
+    --border: #223350;
+    --border-soft: #1a2740;
+    --ink: #e9eef7;
+    --muted: #91a1b8;
+    --faint: #64748b;
+    --accent: #35d0c0;
+    --accent-soft: #35d0c022;
+    --amber: #f0a662;
+    --amber-soft: #f0a66220;
+    --good: #5cd688;
+    --good-soft: #5cd68820;
+    --shadow: 0 1px 0 #ffffff0a, 0 10px 30px -18px #000000cc;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --ground: #eaeef4;
+      --panel: #ffffff;
+      --panel-2: #f6f8fc;
+      --raise: #eef2f8;
+      --border: #cdd8e6;
+      --border-soft: #dee6f0;
+      --ink: #142031;
+      --muted: #52647c;
+      --faint: #7a8aa0;
+      --accent: #0c9c8d;
+      --accent-soft: #0c9c8d14;
+      --amber: #b45309;
+      --amber-soft: #b4530912;
+      --good: #1f9d55;
+      --good-soft: #1f9d5514;
+      --shadow: 0 1px 0 #ffffff, 0 12px 28px -20px #1c2b4033;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0b0f16; --panel: #121a28; --panel-2: #0e1622; --raise: #17223442;
+    --border: #223350; --border-soft: #1a2740; --ink: #e9eef7; --muted: #91a1b8;
+    --faint: #64748b; --accent: #35d0c0; --accent-soft: #35d0c022; --amber: #f0a662;
+    --amber-soft: #f0a66220; --good: #5cd688; --good-soft: #5cd68820;
+    --shadow: 0 1px 0 #ffffff0a, 0 10px 30px -18px #000000cc;
+  }
+  :root[data-theme="light"] {
+    --ground: #eaeef4; --panel: #ffffff; --panel-2: #f6f8fc; --raise: #eef2f8;
+    --border: #cdd8e6; --border-soft: #dee6f0; --ink: #142031; --muted: #52647c;
+    --faint: #7a8aa0; --accent: #0c9c8d; --accent-soft: #0c9c8d14; --amber: #b45309;
+    --amber-soft: #b4530912; --good: #1f9d55; --good-soft: #1f9d5514;
+    --shadow: 0 1px 0 #ffffff, 0 12px 28px -20px #1c2b4033;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(1px 1px at 40px 60px, var(--border-soft) 50%, transparent 51%),
+      radial-gradient(1px 1px at 130px 160px, var(--border-soft) 50%, transparent 51%);
+    background-size: 160px 200px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: clamp(20px, 4vw, 56px) clamp(16px, 4vw, 40px) 72px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 12px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-weight: 650; font-size: clamp(26px, 4.4vw, 40px);
+    letter-spacing: -0.02em; line-height: 1.08; margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .lede { font-size: clamp(15px, 1.6vw, 18px); color: var(--muted); max-width: 62ch; margin: 0; }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--border);
+    padding: 6px 11px; border-radius: 7px; display: inline-flex; gap: 8px; align-items: center;
+  }
+  .chip b { color: var(--muted); font-weight: 500; }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 3px var(--good-soft); }
+
+  section { margin-top: clamp(40px, 6vw, 64px); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+  .sec-num { font-family: var(--mono); color: var(--accent); font-size: 13px; letter-spacing: 0.1em; }
+  h2 { font-family: var(--mono); font-weight: 600; font-size: clamp(18px, 2.4vw, 23px); letter-spacing: -0.01em; margin: 0; }
+  .sec-sub { color: var(--muted); font-size: 14px; margin: 6px 0 0; flex-basis: 100%; }
+
+  /* ---- generic node ---- */
+  .node {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .node-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tag {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--border); border-radius: 5px; padding: 2px 7px;
+  }
+  .tag.accent { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--accent-soft); }
+  .tag.amber { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 45%, var(--border)); background: var(--amber-soft); }
+  .node h3 { font-family: var(--mono); font-size: 15.5px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  .node p { margin: 9px 0 0; color: var(--muted); font-size: 13.5px; }
+  .kv { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .kv b { color: var(--ink); font-weight: 500; }
+
+  /* ---- vertical pipeline ---- */
+  .pipe { display: flex; flex-direction: column; align-items: stretch; }
+  .pipe .node { width: 100%; }
+  .conn { display: flex; flex-direction: column; align-items: center; height: 40px; }
+  .conn .line {
+    width: 2px; flex: 1;
+    background-image: repeating-linear-gradient(180deg, var(--accent) 0 6px, transparent 6px 13px);
+    background-size: 2px 13px; background-repeat: repeat-y;
+    animation: flowdown 0.9s linear infinite;
+  }
+  .conn .head { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid var(--accent); margin-top: -1px; }
+  @keyframes flowdown { to { background-position: 0 13px; } }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fork-label { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--faint); margin: 8px 0 2px; letter-spacing: 0.08em; }
+
+  /* ---- cluster ---- */
+  .cluster {
+    border: 1.5px dashed var(--border); border-radius: 16px; padding: 16px;
+    background: linear-gradient(180deg, var(--panel-2), transparent 40%);
+    position: relative;
+  }
+  .cluster > .cl-label {
+    position: absolute; top: -11px; left: 18px; background: var(--ground);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); padding: 0 10px;
+  }
+  .ns {
+    border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-top: 14px;
+    background: var(--panel-2);
+  }
+  .ns:first-of-type { margin-top: 4px; }
+  .ns-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; margin: 0 0 12px; }
+  .ns.mono-amber .ns-label { color: var(--amber); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pods { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pod {
+    flex: 1 1 150px; background: var(--panel); border: 1px solid var(--border-soft);
+    border-radius: 9px; padding: 11px 12px;
+  }
+  .pod .pt { font-family: var(--mono); font-size: 11px; color: var(--muted); margin: 0 0 8px; letter-spacing: 0.05em; }
+  .router { display: flex; align-items: baseline; gap: 7px; font-family: var(--mono); font-size: 11.5px; padding: 3px 0; border-top: 1px solid var(--border-soft); }
+  .router:first-of-type { border-top: 0; }
+  .router .m { color: var(--accent); }
+  .router .r { color: var(--ink); }
+  .router .d { color: var(--faint); margin-left: auto; font-size: 10.5px; }
+
+  .rel { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .rel .to { color: var(--accent); }
+  .rel .arrow { color: var(--accent); }
+
+  .access { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .port { font-family: var(--mono); font-size: 12px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--panel); }
+  .port b { color: var(--accent); }
+
+  /* ---- request lifecycle ---- */
+  .flowh { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+  .step { flex: 1 1 180px; background: var(--panel); border: 1px solid var(--border); border-radius: 11px; padding: 14px 15px; }
+  .step .sn { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; }
+  .step h4 { font-family: var(--mono); margin: 6px 0 5px; font-size: 14.5px; }
+  .step p { margin: 0; color: var(--muted); font-size: 12.5px; }
+  .harrow { display: flex; align-items: center; justify-content: center; color: var(--accent); font-family: var(--mono); font-size: 20px; padding: 0 6px; }
+  @media (max-width: 640px) { .harrow { transform: rotate(90deg); padding: 4px 0; width: 100%; } }
+
+  /* ---- endpoints table ---- */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 11px; }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border-soft); }
+  thead th { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: var(--panel-2); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.ep { font-family: var(--mono); color: var(--accent); font-size: 12.5px; white-space: nowrap; }
+  td.mdl { font-family: var(--mono); color: var(--ink); font-size: 12.5px; }
+  tbody tr:hover td { background: var(--accent-soft); }
+
+  .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .note { border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 14px; background: var(--panel); }
+  .note.amber { border-left-color: var(--amber); }
+  .note h5 { font-family: var(--mono); margin: 0 0 5px; font-size: 13px; }
+  .note p { margin: 0; color: var(--muted); font-size: 12.5px; }
+  .note code { font-family: var(--mono); font-size: 11.5px; color: var(--ink); background: var(--raise); padding: 1px 5px; border-radius: 4px; }
+
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border-soft); color: var(--faint); font-family: var(--mono); font-size: 11.5px; }
+
+  @media (max-width: 640px) {
+    .split, .grid2, .notes { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .conn .line { animation: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Sistem Mimarisi</p>
+    <h1>ml-prediction · GitOps &amp; Gözlemlenebilirlik Hattı</h1>
+    <p class="lede">Çok-endpoint'li bir FastAPI ML servisinin, tek bir <code>git push</code> ile üretime uzanan
+      yolu: CI/CD ile paketlenir, GitOps ile senkronlanır, Prometheus/Grafana ile izlenir.</p>
+    <div class="facts">
+      <span class="chip"><b>repo</b> Sinan-Simsek/mlops-cicd-monitoring</span>
+      <span class="chip"><b>image</b> sinansimsek/ml-prediction:e72ca80</span>
+      <span class="chip"><b>cluster</b> Docker Desktop k8s</span>
+      <span class="chip"><span class="dot"></span> 3 replica · canlı</span>
+    </div>
+  </header>
+
+  <!-- ============ 1. DELIVERY PIPELINE ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Teslim hattı — koddan cluster'a</h2>
+      <p class="sec-sub">Push'tan sonrası tamamen otomatik: insan sadece kod yazar, gerisi akar.</p>
+    </div>
+
+    <div class="pipe">
+      <div class="node">
+        <div class="node-top"><span class="tag">geliştirici</span><h3>git push origin main</h3></div>
+        <p>Uygulama kodu, <span class="kv"><b>Dockerfile</b></span>, <span class="kv"><b>k8s/</b></span> manifest'leri ve <span class="kv"><b>argocd/</b></span> uygulaması aynı repoda.</p>
+      </div>
+
+      <div class="conn"><span class="line"></span><span class="head"></span></div>
+
+      <div class="node">
+        <div class="node-top"><span class="tag accent">GitHub Actions</span><h3>CI/CD · 3 iş sırayla</h3></div>
+        <p><b style="color:var(--ink)">lint</b> (ruff — tek kalite kapısı) → <b style="color:var(--ink)">build-and-push</b> → <b style="color:var(--ink)">update-manifest</b>. Her iş bir öncekini bekler.</p>
+      </div>
+
+      <p class="fork-label">iki çıktı üretir ↓</p>
+      <div class="split">
+        <div class="node">
+          <div class="node-top"><span class="tag">registry</span><h3>Docker Hub</h3></div>
+          <p>Image push edilir: <span class="kv"><b>:latest</b></span> + <span class="kv"><b>:&lt;sha&gt;</b></span> (kısa commit). Repo public — pull secret'sız çekilir.</p>
+        </div>
+        <div class="node">
+          <div class="node-top"><span class="tag amber">git commit</span><h3>Manifest tag bump</h3></div>
+          <p><span class="kv">k8s/…deployment.yaml</span> image tag'i yeni SHA'ya çevrilir, <span class="kv"><b>[skip ci]</b></span> ile geri commit'lenir (döngü engellenir).</p>
+        </div>
+      </div>
+
+      <div class="conn"><span class="line"></span><span class="head"></span></div>
+
+      <div class="node">
+        <div class="node-top"><span class="tag amber">GitOps</span><h3>ArgoCD — k8s/ klasörünü izler</h3></div>
+        <p>Manifest değişince fark eder, cluster'a <b style="color:var(--ink)">sync</b> eder. <span class="kv"><b>prune</b></span> + <span class="kv"><b>selfHeal</b></span> açık — git tek doğru kaynak.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. RUNTIME CLUSTER ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>Çalışma zamanı — cluster topolojisi</h2>
+      <p class="sec-sub">ArgoCD image'ı Docker Hub'dan çeker; üç namespace birlikte çalışır.</p>
+    </div>
+
+    <div class="cluster">
+      <span class="cl-label">Docker Desktop Kubernetes · paylaşımlı</span>
+
+      <div class="ns mono-amber">
+        <p class="ns-label">namespace: argocd</p>
+        <div class="node" style="box-shadow:none">
+          <div class="node-top"><span class="tag amber">ArgoCD</span><h3>argocd-server · :30081</h3></div>
+          <p>Git ↔ cluster uzlaştırıcı. UI'dan sync durumu ve kaynak sağlığı izlenir.</p>
+          <div class="rel"><span>ArgoCD</span><span class="arrow">──sync k8s/──▶</span><span class="to">namespace: default</span></div>
+        </div>
+      </div>
+
+      <div class="ns">
+        <p class="ns-label">namespace: default</p>
+        <div class="grid2">
+          <div class="node" style="box-shadow:none">
+            <div class="node-top"><span class="tag accent">Deployment ×3</span><h3>ml-prediction</h3></div>
+            <p style="margin-bottom:10px">Her pod aynı FastAPI app'i çalıştırır — üç router:</p>
+            <div class="pods">
+              <div class="pod">
+                <p class="pt">pod · 3 router</p>
+                <div class="router"><span class="m">KNN</span><span class="r">/prediction/iris</span></div>
+                <div class="router"><span class="m">RF</span><span class="r">/prediction/advertising</span></div>
+                <div class="router"><span class="m">LLM</span><span class="r">/llm/chat</span></div>
+              </div>
+            </div>
+            <div class="rel"><span class="kv"><b>Service</b> NodePort</span><span class="arrow">▶</span><span class="to">:30090</span></div>
+          </div>
+
+          <div class="node" style="box-shadow:none">
+            <div class="node-top"><span class="tag">stateful</span><h3>PostgreSQL</h3></div>
+            <p>Her tahmin buraya yazılır. <span class="kv"><b>PVC</b></span> ile veri restart'tan sağ çıkar. ClusterIP <span class="kv"><b>postgres:5432</b></span>.</p>
+            <div class="rel"><span class="to">app</span><span class="arrow">◀── read / write ──▶</span><span class="to">postgres</span></div>
+            <p style="font-size:12px"><span class="kv">app-secret</span> → LLM anahtarını (<span class="kv">GOOGLE_API_KEY</span>) enjekte eder.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ns mono-amber">
+        <p class="ns-label">namespace: monitoring</p>
+        <div class="grid2">
+          <div class="node" style="box-shadow:none">
+            <div class="node-top"><span class="tag amber">Prometheus</span><h3>metrik toplama · :30083</h3></div>
+            <p><span class="kv"><b>ServiceMonitor</b></span> app'in <span class="kv">/metrics</span> ucunu her <b style="color:var(--ink)">15s</b> scrape eder.</p>
+            <div class="rel"><span>Prometheus</span><span class="arrow">──scrape /metrics──▶</span><span class="to">ml-prediction</span></div>
+          </div>
+          <div class="node" style="box-shadow:none">
+            <div class="node-top"><span class="tag amber">Grafana</span><h3>görselleştirme · :30082</h3></div>
+            <p>Prometheus'u veri kaynağı olarak sorgular; istek hızı / gecikme / hata panelleri.</p>
+            <div class="rel"><span>Grafana</span><span class="arrow">──query──▶</span><span class="to">Prometheus</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="access">
+        <span class="port"><b>:30090</b> ML API /docs</span>
+        <span class="port"><b>:30081</b> ArgoCD</span>
+        <span class="port"><b>:30082</b> Grafana</span>
+        <span class="port"><b>:30083</b> Prometheus</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. REQUEST LIFECYCLE ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>İstek yaşam döngüsü</h2>
+      <p class="sec-sub">Üç endpoint de aynı deseni izler: doğrula → tahmin → kaydet → döndür.</p>
+    </div>
+
+    <div class="flowh">
+      <div class="step">
+        <span class="sn">01 · validate</span>
+        <h4>Doğrula</h4>
+        <p>Girdi bir <span class="kv">SQLModel</span> şemasıyla doğrulanır; hatalı istek modele hiç gitmeden <b style="color:var(--ink)">422</b> döner.</p>
+      </div>
+      <div class="harrow">→</div>
+      <div class="step">
+        <span class="sn">02 · infer</span>
+        <h4>Tahmin</h4>
+        <p><span class="kv">joblib</span> ile yüklenen sklearn <span class="kv">.pkl</span> modeli — ya da LangChain + Gemini agent'ı — çalışır.</p>
+      </div>
+      <div class="harrow">→</div>
+      <div class="step">
+        <span class="sn">03 · persist</span>
+        <h4>Kaydet</h4>
+        <p><span class="kv">Depends(get_db)</span> ile açılan <span class="kv">Session</span> satırı PostgreSQL'e yazar, commit eder.</p>
+      </div>
+      <div class="harrow">→</div>
+      <div class="step">
+        <span class="sn">04 · return</span>
+        <h4>Döndür</h4>
+        <p>Kaydedilen satır (id + <span class="kv">created_at</span> ile) <b style="color:var(--ink)">201</b> olarak istemciye döner.</p>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:20px">
+      <table>
+        <thead>
+          <tr><th>Endpoint</th><th>Model</th><th>Döndürdüğü</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="ep">POST /prediction/iris</td><td class="mdl">KNN + LabelEncoder</td><td>Tahmin edilen iris türü</td></tr>
+          <tr><td class="ep">POST /prediction/advertising</td><td class="mdl">RandomForest</td><td>Tahmini satış (sayısal)</td></tr>
+          <tr><td class="ep">POST /llm/chat</td><td class="mdl">LangChain + Gemini</td><td>Yapılandırılmış yorum analizi</td></tr>
+          <tr><td class="ep">GET /healthz</td><td class="mdl">—</td><td>Liveness / readiness probe</td></tr>
+          <tr><td class="ep">GET /metrics</td><td class="mdl">instrumentator</td><td>Prometheus metrikleri</td></tr>
+          <tr><td class="ep">GET /docs</td><td class="mdl">—</td><td>Swagger UI</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 4. RESILIENCE / NOTES ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>Dayanıklılık &amp; kurallar</h2>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <h5>Startup DB-retry</h5>
+        <p><code>main.py</code> başlangıçta DB'ye ~60s boyunca yeniden bağlanmayı dener — restart sonrası CoreDNS/Postgres gecikse bile crash etmez.</p>
+      </div>
+      <div class="note">
+        <h5>pool_pre_ping</h5>
+        <p><code>database.py</code> her havuz bağlantısını kullanmadan test eder — runtime'da Postgres restart olsa bile stale-connection 500'ü yok.</p>
+      </div>
+      <div class="note amber">
+        <h5>Tek kalite kapısı</h5>
+        <p>CI'da otomatik test yok; kalite kontrolü yalnızca <code>ruff check .</code>. Lint geçmeden image build edilmez.</p>
+      </div>
+      <div class="note amber">
+        <h5>GitOps değişmezi</h5>
+        <p>Cluster'a elle <code>kubectl apply</code> yapılmaz; git = tek doğru kaynak. selfHeal manuel değişikliği geri alır.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    ml-prediction · FastAPI + scikit-learn + LangChain → GitHub Actions → Docker Hub → ArgoCD → Docker Desktop k8s → Prometheus/Grafana
+  </footer>
+
+</div>
