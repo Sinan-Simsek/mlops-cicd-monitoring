@@ -51,7 +51,7 @@ Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello FastAPI!"}
+    return {"message": "Hello from live FastAPI!"}
 
 
 @app.get("/healthz")
